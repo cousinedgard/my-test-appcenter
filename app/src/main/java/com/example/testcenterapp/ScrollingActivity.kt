@@ -10,13 +10,14 @@ import kotlinx.android.synthetic.main.activity_scrolling.*
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.distribute.Distribute
 
 class ScrollingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppCenter.start(application, "42a602b1-03a8-4116-bfce-c37b1c60eeae", Analytics::class.java, Crashes::class.java)
+        AppCenter.start(application, "42a602b1-03a8-4116-bfce-c37b1c60eeae", Analytics::class.java, Crashes::class.java, Distribute::class.java)
 
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(toolbar)
