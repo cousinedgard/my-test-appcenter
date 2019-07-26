@@ -1,29 +1,47 @@
 package com.example.testcenterapp
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_scrolling.*
 
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.AbstractCrashesListener
+import com.microsoft.appcenter.crashes.Crashes
+import com.microsoft.appcenter.crashes.model.ErrorReport
 import com.microsoft.appcenter.distribute.Distribute
 
 class ScrollingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        AppCenter.start(application, "42a602b1-03a8-4116-bfce-c37b1c60eeae", Analytics::class.java, Crashes::class.java, Distribute::class.java)
+        AppCenter.setLogLevel(Log.VERBOSE)
+        Crashes.setListener(getCrashesListener())
+        Distribute.setListener(CustomUpdateListener())
+        AppCenter.start(application, "36942027-de3a-48d0-a677-fc7e15df2793", Analytics::class.java, Crashes::class.java, Distribute::class.java)
 
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+    }
+
+    private fun getCrashesListener(): AbstractCrashesListener {
+        return object : AbstractCrashesListener() {
+
+            override fun shouldAwaitUserConfirmation(): Boolean {
+                return false
+            }
+
+            override fun shouldProcess(report: ErrorReport?): Boolean {
+                return true
+            }
         }
     }
 
