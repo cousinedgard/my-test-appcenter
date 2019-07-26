@@ -24,10 +24,13 @@ class ScrollingActivity : AppCompatActivity() {
         Distribute.setListener(CustomUpdateListener())
         AppCenter.start(application, "36942027-de3a-48d0-a677-fc7e15df2793", Analytics::class.java, Crashes::class.java, Distribute::class.java)
 
+        val versionCode = BuildConfig.VERSION_CODE
+        val versionName = BuildConfig.VERSION_NAME
+
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Version App $versionName ($versionCode)", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
     }
